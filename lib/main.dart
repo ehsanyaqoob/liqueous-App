@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:liqueous/pages/invite_page.dart';
+import 'package:liqueous/pages/profile_page.dart';
+import 'pages/darkmood_page.dart';
 import 'pages/dashboard_page.dart';
+import 'pages/help&support_page.dart';
 import 'pages/logout_page.dart';
+import 'pages/notification_page.dart';
+import 'pages/privacy_page.dart';
 import 'pages/requests_page.dart';
 import 'pages/Tasks_page.dart';
 import 'pages/home_page.dart';
+import 'pages/settings_page.dart';
 import 'screens/login_screen.dart';
 import 'screens/signUpscreen.dart';
 import 'screens/verifyscreen.dart';
+import 'widgets/generate_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +41,14 @@ class MyApp extends StatelessWidget {
         '/Logout': (context) => LogOutPage(),
         '/Tasks': (context) => TasksPage(),
         '/Dashboard': (context) => DashboardPage(),
+        '/Profile': (context) => ProfilePage(),
+        '/Invite': (context) => InvitePage(),
+        '/Privacy': (context) => PrivacyPage(),
+        '/Settings': (context) => SettingsPage(),
+        '/Help': (context) => HelpPage(),
+        '/Notification': (context) => NotificationPage(),
+        '/DarkMood': (context) => DarkMoodPage(),
+        '/Generate': (context) => GenerateSheetPage(),
       },
     );
   }
@@ -80,14 +96,21 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'images/logo-full.png',
-            //  fit: BoxFit.cover,
+          // Logo
+          Positioned.fill(
+            child: Image.asset(
+              'images/logo.png',
+              //fit: BoxFit.cover,
+            ),
           ),
-          Center(
+
+          // Progress Bar and Loading Text
+          Positioned.fill(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Expanded(
+                    child: SizedBox()), // Empty space above the progress bar
                 DotProcessingAnimation(),
                 SizedBox(height: 16),
                 FadeTransition(
@@ -141,6 +164,8 @@ class _DotProcessingAnimationState extends State<DotProcessingAnimation>
         Dot(animation: _animationController, offset: 0),
         SizedBox(width: 8),
         Dot(animation: _animationController, offset: 250),
+        SizedBox(width: 8),
+        Dot(animation: _animationController, offset: 500),
         SizedBox(width: 8),
         Dot(animation: _animationController, offset: 500),
       ],

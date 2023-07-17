@@ -57,7 +57,9 @@ class _HomePageState extends State<HomePage> {
               Icons.dark_mode_rounded,
               color: Colors.grey,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/DarkMood');
+            },
           ),
           SizedBox(
             width: 7.0,
@@ -67,7 +69,9 @@ class _HomePageState extends State<HomePage> {
               Icons.notification_add,
               color: Colors.grey,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/Notification');
+            },
           ),
           SizedBox(
             width: 7.0,
@@ -77,7 +81,10 @@ class _HomePageState extends State<HomePage> {
               Icons.person,
               color: Colors.grey,
             ),
-            onPressed: () {},
+            onPressed: () {
+              // it will move to profile page
+              Navigator.pushNamed(context, '/Profile');
+            },
           ),
         ],
       ),
@@ -97,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     CircleAvatar(
                       radius: 45,
-                      backgroundImage: AssetImage('images/nft.jpg'),
+                      backgroundImage: AssetImage('images/profile.jpg'),
                     ),
                     SizedBox(
                       height: 8,
@@ -126,7 +133,7 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 //
-                Navigator.pushNamed(context, '/Dashboard');
+                Navigator.pushNamed(context, '/home');
               },
             ),
             ListTile(

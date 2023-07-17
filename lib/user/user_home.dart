@@ -13,7 +13,7 @@ class UserHome extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(18, 16, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 200,
                 width: 300,
@@ -28,28 +28,29 @@ class UserHome extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundImage: AssetImage('images/nft.jpg'),
+                          backgroundImage: AssetImage('images/profile.jpg'),
                         ),
-                        SizedBox(
-                          width: 6,
-                        ),
+                        SizedBox(width: 28.0),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(children: [
-                              Icon(Icons.notifications,
-                                  color: Colors.grey, size: 30),
-                              SizedBox(width: 5),
-                              Text(
-                                'ID: GLPRE8VRC',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
+                            Row(
+                              children: [
+                                Icon(Icons.notifications,
+                                    color: Colors.grey, size: 30),
+                                SizedBox(width: 5),
+                                Text(
+                                  'ID: GLPRE8VRC',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ]),
+                              ],
+                            ),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'Admin',
@@ -59,33 +60,29 @@ class UserHome extends StatelessWidget {
                                     color: Colors.black54,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 200,
-                                      height: 40,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          //
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.teal,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Generate termsheet',
-                                          style: TextStyle(
-                                              fontFamily: 'Roboto-Bold.ttf'),
-                                        ),
+                                SizedBox(height: 10),
+                                Container(
+                                  width: 200,
+                                  height: 40,
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      // for generating user term sheet
+                                      Navigator.pushNamed(context, '/Generate');
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.teal,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
                                       ),
                                     ),
-                                  ],
+                                    icon: Icon(Icons.settings),
+                                    label: Text(
+                                      'Generate termsheet',
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto-Bold.ttf',
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -98,10 +95,11 @@ class UserHome extends StatelessWidget {
               ),
             ),
           ),
+
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 200,
                 width: 90,
@@ -165,9 +163,9 @@ class UserHome extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 200,
                 width: 90,
@@ -232,9 +230,9 @@ class UserHome extends StatelessWidget {
           ),
           // 3rd
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 200,
                 width: 90,
@@ -298,9 +296,9 @@ class UserHome extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(2),
               child: Container(
                 height: 200,
                 width: 90,
@@ -367,7 +365,7 @@ class UserHome extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 160,
                 color: Colors.white,
@@ -440,7 +438,7 @@ class UserHome extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               child: Container(
                 height: 160,
                 color: Colors.white,
@@ -512,9 +510,9 @@ class UserHome extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
+            padding: const EdgeInsets.fromLTRB(20, 5, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(6),
               child: Container(
                 height: 120,
                 color: Colors.white,
@@ -572,7 +570,7 @@ class UserHome extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(6),
               child: Container(
                 height: 800,
                 color: Colors.white,
@@ -822,7 +820,7 @@ class UserHome extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 2),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(6.0),
               child: Container(
                 color: Colors.white,
                 child: Column(
@@ -860,6 +858,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -914,6 +916,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -976,6 +982,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -1028,6 +1038,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -1088,6 +1102,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -1140,6 +1158,10 @@ class UserHome extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
