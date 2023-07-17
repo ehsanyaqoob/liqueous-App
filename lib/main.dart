@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -93,38 +94,57 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Logo
-          Positioned.fill(
-            child: Image.asset(
-              'images/logo.png',
-              //fit: BoxFit.cover,
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                'images/logo.png',
+                //fit: BoxFit.cover,
+              ),
             ),
           ),
 
           // Progress Bar and Loading Text
-          Positioned.fill(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    child: SizedBox()), // Empty space above the progress bar
-                DotProcessingAnimation(),
-                SizedBox(height: 16),
-                FadeTransition(
-                  opacity: _opacityAnimation,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: LinearProgressIndicatorWithPercentage(
+                  animation: _animationController,
+                ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                ),
+              ),
+              SizedBox(height: 8),
+              FadeTransition(
+                opacity: _opacityAnimation,
+                child: ElevatedButton(
+                  onPressed: () {},
                   child: Text(
                     'Loading...',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -132,55 +152,12 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-class DotProcessingAnimation extends StatefulWidget {
-  @override
-  _DotProcessingAnimationState createState() => _DotProcessingAnimationState();
-}
-
-class _DotProcessingAnimationState extends State<DotProcessingAnimation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Dot(animation: _animationController, offset: 0),
-        SizedBox(width: 8),
-        Dot(animation: _animationController, offset: 250),
-        SizedBox(width: 8),
-        Dot(animation: _animationController, offset: 500),
-        SizedBox(width: 8),
-        Dot(animation: _animationController, offset: 500),
-      ],
-    );
-  }
-}
-
-class Dot extends StatelessWidget {
+class LinearProgressIndicatorWithPercentage extends StatelessWidget {
   final Animation<double> animation;
-  final double offset;
 
-  const Dot({
+  const LinearProgressIndicatorWithPercentage({
     Key? key,
     required this.animation,
-    required this.offset,
   }) : super(key: key);
 
   @override
@@ -188,16 +165,22 @@ class Dot extends StatelessWidget {
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, animation.value * offset),
-          child: Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey,
+        return Column(
+          children: [
+            LinearProgressIndicator(
+              value: animation.value,
+              backgroundColor: Colors.grey,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
             ),
-          ),
+            SizedBox(height: 4),
+            Text(
+              '${(animation.value * 100).toInt()}%',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         );
       },
     );
