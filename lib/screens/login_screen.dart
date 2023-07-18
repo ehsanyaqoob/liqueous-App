@@ -62,6 +62,10 @@ class LoginScreen extends StatelessWidget {
                 inputDecoration: InputDecoration(
                   hintText: 'Phone Number',
                   labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
                   prefixIcon: Icon(Icons.phone),
                 ),
               ),

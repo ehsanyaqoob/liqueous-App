@@ -78,6 +78,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       decoration: InputDecoration(
                         hintText: '-',
                         counterText: '',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
                       ),
                       onChanged: (value) {
                         if (value.isNotEmpty) {
@@ -97,6 +101,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         decoration: InputDecoration(
                           hintText: '-',
                           counterText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
                         ),
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -117,6 +125,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         decoration: InputDecoration(
                           hintText: '-',
                           counterText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
                         ),
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -137,6 +149,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       decoration: InputDecoration(
                         hintText: '-',
                         counterText: '',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
                       ),
                       onChanged: (value) {
                         if (value.isEmpty) {

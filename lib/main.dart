@@ -16,7 +16,9 @@ import 'pages/settings_page.dart';
 import 'screens/login_screen.dart';
 import 'screens/signUpscreen.dart';
 import 'screens/verifyscreen.dart';
+import 'widgets/Submit.dart';
 import 'widgets/generate_widget.dart';
+import 'widgets/plan_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,11 +51,12 @@ class MyApp extends StatelessWidget {
         '/Notification': (context) => NotificationPage(),
         '/DarkMood': (context) => DarkMoodPage(),
         '/Generate': (context) => GenerateSheetPage(),
+        '/Submit': (context) => SubmitQueryPage(),
+        '/Plan': (context) => PlanPage(),
       },
     );
   }
 }
-
 
 class SplashScreen extends StatefulWidget {
   @override
