@@ -41,6 +41,12 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   country_code_picker: ^3.0.0
 
+  # http request package
+  http: ^0.13.3
+  # package for drop down search
+  dropdown_search: ^2.0.0
+
+
 
 
 dev_dependencies:

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:liqueous/pages/invite_page.dart';
 import 'package:liqueous/pages/profile_page.dart';
+import 'API/Get_A_Today_API.dart';
 import 'pages/darkmood_page.dart';
 import 'pages/dashboard_page.dart';
 import 'pages/help&support_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         // Additional theme customization
       ),
       debugShowCheckedModeBanner: false,
+      // these are routes for all over the app
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
@@ -50,9 +52,10 @@ class MyApp extends StatelessWidget {
         '/Help': (context) => HelpPage(),
         '/Notification': (context) => NotificationPage(),
         '/DarkMood': (context) => DarkMoodPage(),
-        '/Generate': (context) => GenerateSheetPage(),
+        '/Generate': (context) => QuotePage(),
         '/Submit': (context) => SubmitQueryPage(),
-        '/Plan': (context) => PlanPage(),
+        '/Plan': (context) => PlanPage(), 
+        '/Qoute': (context) => GenerateSheetPage(),
       },
     );
   }

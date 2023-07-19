@@ -75,7 +75,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         keyboardType: TextInputType.number,
                         maxLength: 1,
                         decoration: InputDecoration(
-                          hintText: '-',
+                          hintText: '   -',
                           counterText: '',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -100,7 +100,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         keyboardType: TextInputType.number,
                         maxLength: 1,
                         decoration: InputDecoration(
-                          hintText: '-',
+                          hintText: '   -',
                           counterText: '',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -127,7 +127,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         keyboardType: TextInputType.number,
                         maxLength: 1,
                         decoration: InputDecoration(
-                          hintText: '-',
+                          hintText: '   -',
                           counterText: '',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -154,7 +154,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         keyboardType: TextInputType.number,
                         maxLength: 1,
                         decoration: InputDecoration(
-                          hintText: '-',
+                          hintText: '   -',
                           counterText: '',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
