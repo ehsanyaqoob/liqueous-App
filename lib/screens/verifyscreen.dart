@@ -36,20 +36,20 @@ class _VerifyScreenState extends State<VerifyScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
-          margin: const EdgeInsets.all(70),
-          alignment: Alignment.topCenter,
+          margin: const EdgeInsets.all(50),
+          alignment: Alignment.center,
           child: Column(
             children: [
               Text(
                 'Verify Your Mobile',
                 style: TextStyle(
                   fontFamily: 'Roboto-Bold',
-                  fontSize: 22,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 8),
               Text(
                 'Sign in to your account',
                 style: TextStyle(
@@ -66,7 +66,10 @@ class _VerifyScreenState extends State<VerifyScreen> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       child: TextFormField(
                         controller: _controller1,
                         keyboardType: TextInputType.number,
@@ -78,6 +81,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
+                          contentPadding: EdgeInsets.all(10),
+                          isDense: true,
                         ),
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -89,7 +94,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         controller: _controller2,
                         keyboardType: TextInputType.number,
@@ -101,6 +106,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
+                          contentPadding: EdgeInsets.all(10),
+                          isDense: true,
                         ),
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -114,7 +121,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         controller: _controller3,
                         keyboardType: TextInputType.number,
@@ -126,6 +133,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
+                          contentPadding: EdgeInsets.all(10),
+                          isDense: true,
                         ),
                         onChanged: (value) {
                           if (value.isNotEmpty) {
@@ -139,7 +148,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: TextFormField(
                         controller: _controller4,
                         keyboardType: TextInputType.number,
@@ -151,6 +160,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
+                          contentPadding: EdgeInsets.all(10),
+                          isDense: true,
                         ),
                         onChanged: (value) {
                           if (value.isEmpty) {

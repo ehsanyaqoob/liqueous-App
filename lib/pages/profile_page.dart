@@ -63,23 +63,26 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           SizedBox(height: 32),
-          buildButton('Privacy', Icons.privacy_tip_outlined),
-          buildButton('Settings', Icons.settings_accessibility_outlined),
-          buildButton('Help & Support', Icons.help),
-          buildButton('Invite a Friend!', Icons.person_2_sharp),
+          buildButton('Privacy', Icons.privacy_tip_outlined, '/Privacy'),
+          buildButton(
+              'Settings', Icons.settings_accessibility_outlined, '/Settings'),
+          buildButton('Help & Support', Icons.help, '/Help'),
+          buildButton('Invite a Friend!', Icons.person_2_sharp, '/Invite'),
         ],
       ),
     );
   }
 
-  Widget buildButton(String text, IconData icon) {
+  Widget buildButton(String text, IconData icon, String route) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         height: 40,
         width: 300,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, route);
+          },
           style: ElevatedButton.styleFrom(
             primary: Colors.blue[400],
             shape: RoundedRectangleBorder(

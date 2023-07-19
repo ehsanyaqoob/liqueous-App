@@ -30,7 +30,7 @@ class UserHome extends StatelessWidget {
                           radius: 40,
                           backgroundImage: AssetImage('images/profile.jpg'),
                         ),
-                        SizedBox(width: 28.0),
+                        SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
