@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-// verification Screen
 class VerifyScreen extends StatefulWidget {
   @override
   State<VerifyScreen> createState() => _VerifyScreenState();
 }
 
 class _VerifyScreenState extends State<VerifyScreen> {
-  // for curser behaviour that it will move to next
   TextEditingController _controller1 = TextEditingController();
   TextEditingController _controller2 = TextEditingController();
   TextEditingController _controller3 = TextEditingController();
@@ -28,7 +26,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
         title: Text(
           'Verification',
           style: TextStyle(
-            fontFamily: 'Roboto-Bold.ttf',
+            fontFamily: 'Roboto-Bold',
             fontSize: 20,
             color: Colors.white,
           ),
@@ -45,56 +43,54 @@ class _VerifyScreenState extends State<VerifyScreen> {
               Text(
                 'Verify Your Mobile',
                 style: TextStyle(
-                  fontFamily: 'Roboto-Bold.ttf',
+                  fontFamily: 'Roboto-Bold',
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Text(
                 'Sign in to your account',
                 style: TextStyle(
-                  fontFamily: 'Roboto-Bold.ttf',
+                  fontFamily: 'Roboto-Bold',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
                 ),
                 textAlign: TextAlign.justify,
               ),
-              SizedBox(
-                height: 60,
-              ),
+              SizedBox(height: 40),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    child: TextFormField(
-                      controller: _controller1,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      decoration: InputDecoration(
-                        hintText: '-',
-                        counterText: '',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: Colors.grey),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: TextFormField(
+                        controller: _controller1,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        decoration: InputDecoration(
+                          hintText: '-',
+                          counterText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
                         ),
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            FocusScope.of(context).nextFocus();
+                          }
+                        },
                       ),
-                      onChanged: (value) {
-                        if (value.isNotEmpty) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
                   Expanded(
-                    child: TextFormField(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: TextFormField(
                         controller: _controller2,
                         keyboardType: TextInputType.number,
                         maxLength: 1,
@@ -102,7 +98,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           hintText: '-',
                           counterText: '',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                         ),
@@ -112,13 +108,14 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           } else {
                             FocusScope.of(context).previousFocus();
                           }
-                        }),
-                  ),
-                  SizedBox(
-                    width: 10,
+                        },
+                      ),
+                    ),
                   ),
                   Expanded(
-                    child: TextFormField(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: TextFormField(
                         controller: _controller3,
                         keyboardType: TextInputType.number,
                         maxLength: 1,
@@ -126,7 +123,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           hintText: '-',
                           counterText: '',
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                         ),
@@ -136,45 +133,41 @@ class _VerifyScreenState extends State<VerifyScreen> {
                           } else {
                             FocusScope.of(context).previousFocus();
                           }
-                        }),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _controller4,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      decoration: InputDecoration(
-                        hintText: '-',
-                        counterText: '',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
+                        },
                       ),
-                      onChanged: (value) {
-                        if (value.isEmpty) {
-                          FocusScope.of(context).previousFocus();
-                        }
-                      },
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: TextFormField(
+                        controller: _controller4,
+                        keyboardType: TextInputType.number,
+                        maxLength: 1,
+                        decoration: InputDecoration(
+                          hintText: '-',
+                          counterText: '',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          if (value.isEmpty) {
+                            FocusScope.of(context).previousFocus();
+                          }
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: 60,
-              ),
+              SizedBox(height: 40),
               Container(
                 width: 300,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    // it will move after verification to home page
                     Navigator.pushNamed(context, '/home');
                   },
                   style: ElevatedButton.styleFrom(
@@ -183,9 +176,9 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     ),
                   ),
                   child: Text(
-                    'verify',
+                    'Verify',
                     style: TextStyle(
-                      fontFamily: 'Roboto-Bold.ttf',
+                      fontFamily: 'Roboto-Bold',
                       fontSize: 20,
                       color: Colors.white,
                     ),

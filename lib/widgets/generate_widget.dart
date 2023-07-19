@@ -39,9 +39,7 @@ class GenerateSheetPage extends StatelessWidget {
                   'Get Your',
                   style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  width: 5,
-                ),
+                SizedBox(width: 5),
                 Text(
                   'Estimate ',
                   style: TextStyle(
@@ -55,7 +53,6 @@ class GenerateSheetPage extends StatelessWidget {
                 ),
               ],
             ),
-            // 2nd text row
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -104,37 +101,37 @@ class GenerateSheetPage extends StatelessWidget {
             SizedBox(height: 8.0),
             Row(
               children: [
-                Expanded(
-                  flex: 1,
+                Container(
+                  width: 100,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.grey),
+                  ),
                   child: CountryCodePicker(
                     onChanged: (value) {
                       selectedCountryCode = value.dialCode!;
                     },
                     initialSelection: selectedCountryCode,
-                    favorite: [
-                      'US',
-                      'IN',
-                      'GB'
-                    ], // Add your favorite country codes
-                    showCountryOnly: true,
+                    favorite: ['US', 'IN', 'GB'],
+                    showCountryOnly: false,
+                    showOnlyCountryWhenClosed: false,
                     alignLeft: false,
                   ),
                 ),
                 SizedBox(width: 8.0),
                 Expanded(
-                  flex: 3,
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: 'Enter your mobile number',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-
             SizedBox(height: 16.0),
             Text(
               'Total Number of shares you own ',
@@ -143,7 +140,7 @@ class GenerateSheetPage extends StatelessWidget {
             SizedBox(height: 8.0),
             TextField(
               decoration: InputDecoration(
-                labelText: 'total number of shares you own',
+                labelText: 'Total number of shares you own',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -179,7 +176,7 @@ class GenerateSheetPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Text(
-              'Transiction type ',
+              'Transaction type ',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8.0),
@@ -187,11 +184,11 @@ class GenerateSheetPage extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Enter the transaction type',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
-            //  SizedBox(height: 1),
+            SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.all(40),
               child: Container(
@@ -207,19 +204,13 @@ class GenerateSheetPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Icon(Icons.person_2_sharp),
-                      Text(
-                        'Submitt Query!',
-                        style: TextStyle(
-                          fontFamily: 'Roboto-Bold.ttf',
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    'Submit Query!',
+                    style: TextStyle(
+                      fontFamily: 'Roboto-Bold.ttf',
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

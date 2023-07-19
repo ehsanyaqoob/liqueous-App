@@ -11,7 +11,7 @@ class UserHome extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(18, 16, 20, 2),
+            padding: EdgeInsets.fromLTRB(18, 10, 20, 2),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Container(
@@ -38,7 +38,7 @@ class UserHome extends StatelessWidget {
                               children: [
                                 Icon(Icons.notifications,
                                     color: Colors.grey, size: 30),
-                                SizedBox(width: 5),
+                                SizedBox(width: 3),
                                 Text(
                                   'ID: GLPRE8VRC',
                                   style: TextStyle(
@@ -490,7 +490,7 @@ class UserHome extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          ' 3 approved',
+                          ' approved',
                           style: TextStyle(
                             fontFamily: 'Roboto-Bold.ttf',
                             fontSize: 16,

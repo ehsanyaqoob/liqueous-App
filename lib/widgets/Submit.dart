@@ -109,7 +109,7 @@ class _SubmitQueryPageState extends State<SubmitQueryPage> {
                   ' Min',
                   style: TextStyle(color: Colors.grey),
                 ),
-                SizedBox(width: 300.0),
+                SizedBox(width: 285.0),
                 Text(
                   'Max',
                   style: TextStyle(color: Colors.grey),

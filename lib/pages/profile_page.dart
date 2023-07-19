@@ -19,208 +19,90 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Profile'),
-        ),
-        body: ListView(padding: EdgeInsets.all(70), children: [
-          // Profile Avatar
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(45.0),
+        children: [
           CircleAvatar(
             radius: 80,
             backgroundImage: AssetImage('images/profile.jpg'),
           ),
-
           SizedBox(height: 16),
-
-          // Name
           ListTile(
-            leading: Icon(Icons.person),
+            //  leading: Icon(Icons.person),
             title: Container(
-              width: double
-                  .infinity, // Set the width to expand to the available space
+              width: double.infinity,
               child: TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your name',
+                  labelText: 'Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
+                  prefixIcon: Icon(Icons.person),
                 ),
               ),
             ),
           ),
-
-          // Email
           ListTile(
-            leading: Icon(Icons.email),
+            //    leading: Icon(Icons.email),
             title: Container(
-              width: double
-                  .infinity, // Set the width to expand to the available space
+              width: double.infinity,
               child: TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your email',
+                  labelText: 'Email',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
+                  prefixIcon: Icon(Icons.email),
                 ),
               ),
             ),
           ),
-
           SizedBox(height: 32),
+          buildButton('Privacy', Icons.privacy_tip_outlined),
+          buildButton('Settings', Icons.settings_accessibility_outlined),
+          buildButton('Help & Support', Icons.help),
+          buildButton('Invite a Friend!', Icons.person_2_sharp),
+        ],
+      ),
+    );
+  }
 
-          // Privacy Button
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 40,
-              width: 150,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/Privacy');
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.privacy_tip_outlined),
-                    Text(
-                      'Privacy',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/Privacy');
-                      },
-                      child: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
-                ),
-              ),
+  Widget buildButton(String text, IconData icon) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        height: 40,
+        width: 300,
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            primary: Colors.blue[400],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 40,
-              width: 150,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/Settings');
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.settings_accessibility_outlined),
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/Settings');
-                      },
-                      child: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(icon),
+              Text(
+                text,
+                style: TextStyle(
+                  fontFamily: 'Roboto-Bold.ttf',
+                  fontSize: 20,
+                  color: Colors.white,
                 ),
               ),
-            ),
+              Icon(Icons.arrow_forward_ios),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 40,
-              width: 150,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/Help');
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue[400],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(Icons.help),
-                    Text(
-                      'Help & Support',
-                      style: TextStyle(
-                        fontFamily: 'Roboto-Bold.ttf',
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/Help');
-                      },
-                      child: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 40,
-                width: 150,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/Invite');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue[400],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(Icons.person_2_sharp),
-                      Text(
-                        'Invite a friend!',
-                        style: TextStyle(
-                          fontFamily: 'Roboto-Bold.ttf',
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/Invite');
-                        },
-                        child: Icon(Icons.arrow_forward_ios),
-                      ),
-                    ],
-                  ),
-                ),
-              ))
-        ]));
+        ),
+      ),
+    );
   }
 }
