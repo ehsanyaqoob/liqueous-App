@@ -1,9 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:async';
-import 'package:dropdown_search/dropdown_search.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: QuotePage(),
+    );
+  }
+}
 
 class QuotePage extends StatefulWidget {
   const QuotePage({Key? key});
@@ -118,56 +128,31 @@ class _QuotePageState extends State<QuotePage> {
                   ],
                 ),
                 SizedBox(height: 16),
-                ListTile(
-                  title: Container(
-                    width: 300,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[400]!,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: DropdownSearch<Quote>(
-                      mode: Mode.MENU,
-                      showSearchBox: true,
-                      isFilteredOnline: true,
-                      dropDownButton: const Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.grey,
-                        size: 18,
-                      ),
-                      dropdownSearchDecoration: InputDecoration(
-                        hintText: 'Search (AAPL, GOOG) etc.',
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]!),
-                          borderRadius: BorderRadius.circular(30),
+                GestureDetector(
+                  onTap: () {
+                    _showAlertDialog(context);
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      width: 300,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey[400]!,
+                          width: 1.0,
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]!),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      dropdownBuilder: _customDropdownQuote,
-                      popupItemBuilder: _customPopupItemBuilder,
-                      onChanged: (Quote? object) {
-                        setState(() {
-                          _selectedOption = object?.symbol;
-                          if (object != null) {}
-                        });
-                      },
-                      onFind: (String? filter) async {
-                        return getData(filter ?? '');
-                      },
-                      showClearButton: false,
-                      clearButtonBuilder: (_) => const Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.clear,
-                          size: 17,
-                          color: Colors.black,
+                      child: Center(
+                        child: Text(
+                          _selectedOption ?? "Search (AAPL, GOOG) etc.",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: _selectedOption == null
+                                ? Color.fromARGB(235, 158, 158, 158)
+                                : Colors.black,
+                          ),
                         ),
                       ),
                     ),
@@ -179,7 +164,7 @@ class _QuotePageState extends State<QuotePage> {
                   width: 220,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/Qoute');
+                      Navigator.pushNamed(context, '/Quote');
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue[400],
@@ -210,83 +195,159 @@ class _QuotePageState extends State<QuotePage> {
       ),
     );
   }
-}
 
-Widget _customDropdownQuote(BuildContext context, Quote? item) {
-  return Container(
-    child: (item == null)
-        ? const ListTile(
-            contentPadding: EdgeInsets.all(16.0),
-            title: Text(
-              "Search (AAPL, GOOG) etc.",
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Color.fromARGB(235, 158, 158, 158),
+  void _showAlertDialog(BuildContext context) {
+    String searchText = _selectedOption ?? '';
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              content: SizedBox(
+                height: 300,
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      onChanged: (value) async {
+                        setState(() {
+                          searchText = value;
+                        });
+                        List<Quote> fetchedData = await getData(searchText);
+                        print('Fetched Data:');
+                        fetchedData.forEach((quote) {
+                          print('${quote.name} (${quote.symbol})');
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search (AAPL, GOOG) etc.',
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey[400]!),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey[400]!),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Filtered Data:',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: FutureBuilder<List<Quote>>(
+                        future: getData(searchText),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error fetching data.'),
+                            );
+                          } else {
+                            List<Quote> fetchedData = snapshot.data ?? [];
+                            if (fetchedData.isEmpty) {
+                              return Center(
+                                child: Text('No data found.'),
+                              );
+                            } else {
+                              return ListView.builder(
+                                itemCount: fetchedData.length,
+                                itemBuilder: (context, index) {
+                                  final quote = fetchedData[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedOption = quote.symbol;
+                                      });
+                                      // Use addPostFrameCallback to dismiss the AlertDialog after the current frame is drawn
+                                      WidgetsBinding.instance!
+                                          .addPostFrameCallback((_) {
+                                        Navigator.of(context).pop();
+                                      });
+                                    },
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 16),
+                                      color: _selectedOption == quote.symbol
+                                          ? Colors.blue[100]
+                                          : Colors.transparent,
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          quote.name,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color:
+                                                _selectedOption == quote.symbol
+                                                    ? Colors.blue
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          )
-        : ListTile(
-            contentPadding: const EdgeInsets.all(16.0),
-            title: Text(
-              item.name,
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 13.5, color: Colors.black),
-            ),
-          ),
-  );
-}
+            );
+          },
+        );
+      },
+    );
+  }
 
-Widget _customPopupItemBuilder(
-    BuildContext context, dynamic item, bool isSelected) {
-  return Container(
-    margin: const EdgeInsets.symmetric(horizontal: 8),
-    decoration: !isSelected
-        ? null
-        : BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.white,
-          ),
-    child: ListTile(
-      title: Text(
-        item.name,
-        style: const TextStyle(
-          fontSize: 14,
-          color: Color.fromARGB(255, 102, 100, 100),
+  Future<List<Quote>> getData(String filter) async {
+    try {
+      var response = await http.get(
+        Uri.parse(
+          "https://liqueous.logixsy.com/api/quote/tickers?search=$filter",
         ),
-      ),
-    ),
-  );
-}
+      );
 
-Future<List<Quote>> getData(String filter) async {
-  var response = await http.get(
-    Uri.parse("https://liqueous.logixsy.com/api/quote/tickers?search=$filter"),
-  );
-
-// Print the JSON data from the API before decoding
-  print(response.body);
-  if (response.statusCode == 200) {
-    var data = jsonDecode(response.body);
-    if (data['data'] != null) {
-      List<dynamic> quotesJson = data['data'];
-      var detailsList = <Quote>[];
-      for (Map<String, dynamic> quote in quotesJson) {
-        detailsList.add(Quote(
-          symbol: quote['code'],
-          name: quote['name'],
-          exchangeName: quote['exchange_name'],
-        ));
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data['data'] != null) {
+          List<dynamic> quotesJson = data['data'];
+          var detailsList = <Quote>[];
+          for (Map<String, dynamic> quote in quotesJson) {
+            detailsList.add(Quote(
+              symbol: quote['code'],
+              name: quote['name'],
+              exchangeName: quote['exchange_name'],
+            ));
+          }
+          return detailsList;
+        }
       }
-      print(detailsList); // Check if the list is correctly populated
-      return detailsList;
-    } else {
-      return []; // Return an empty list if 'data' is null or empty
+      // Return an empty list if no data found or in case of an error
+      return [];
+    } catch (e) {
+      // Return an empty list in case of an exception
+      return [];
     }
-  } else {
-    throw Exception("Error ${response.statusCode}");
   }
 }
 
@@ -294,10 +355,12 @@ class Quote {
   final String symbol;
   final String name;
   final String exchangeName;
+  bool isSelected; // Add the isSelected property to track selection
 
   Quote({
     required this.symbol,
     required this.name,
     required this.exchangeName,
+    this.isSelected = false, // Default to unselected
   });
 }
