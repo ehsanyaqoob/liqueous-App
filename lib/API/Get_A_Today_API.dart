@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../widgets/generate_widget.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -23,8 +25,8 @@ class QuotePage extends StatefulWidget {
 }
 
 class _QuotePageState extends State<QuotePage> {
-  String? _selectedOption;
-  List<Quote> _dropdownItems = [];
+  Quote? _selectedQuote;
+  String? _selectedOptionName;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +129,7 @@ class _QuotePageState extends State<QuotePage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 22),
                 GestureDetector(
                   onTap: () {
                     _showAlertDialog(context);
@@ -135,7 +137,7 @@ class _QuotePageState extends State<QuotePage> {
                   child: Material(
                     color: Colors.transparent,
                     child: Container(
-                      width: 300,
+                      width: 400,
                       height: 60,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -144,27 +146,54 @@ class _QuotePageState extends State<QuotePage> {
                         ),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: Center(
-                        child: Text(
-                          _selectedOption ?? "Search (AAPL, GOOG) etc.",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: _selectedOption == null
-                                ? Color.fromARGB(235, 158, 158, 158)
-                                : Colors.black,
+                      child: Row(
+                        children: [
+                          SizedBox(width: 16),
+                          Expanded(
+                            child: Text(
+                              _selectedOptionName ?? "Search (AAPL, GOOG) etc.",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: _selectedOptionName == null
+                                    ? Color.fromARGB(235, 158, 158, 158)
+                                    : Colors.black,
+                              ),
+                            ),
                           ),
-                        ),
+                          Icon(
+                            Icons.search,
+                            size: 30,
+                            color: Colors.grey[400],
+                          ),
+                          SizedBox(width: 10),
+                        ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 22),
                 Container(
                   height: 55,
                   width: 220,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/Quote');
+                    onPressed: () async {
+                      Quote? selectedQuote = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GenerateSheetPage(),
+                        ),
+                      );
+
+                      if (selectedQuote != null) {
+                        setState(() {
+                          _selectedOptionName = selectedQuote.name;
+                        });
+                      } else {
+                        setState(() {
+                          _selectedOptionName =
+                              null; // Set to null when returning from Generate Term Sheet page
+                        });
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue[400],
@@ -196,15 +225,19 @@ class _QuotePageState extends State<QuotePage> {
     );
   }
 
-  void _showAlertDialog(BuildContext context) {
-    String searchText = _selectedOption ?? '';
-    showDialog(
+  void _showAlertDialog(BuildContext context) async {
+    String searchText = _selectedQuote?.symbol ?? '';
+    List<Quote> fetchedData = [];
+    Quote? selectedOption = await showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               content: SizedBox(
@@ -218,11 +251,16 @@ class _QuotePageState extends State<QuotePage> {
                         setState(() {
                           searchText = value;
                         });
-                        List<Quote> fetchedData = await getData(searchText);
-                        print('Fetched Data:');
-                        fetchedData.forEach((quote) {
-                          print('${quote.name} (${quote.symbol})');
-                        });
+                        if (searchText.isEmpty) {
+                          setState(() {
+                            fetchedData = [];
+                          });
+                        } else {
+                          List<Quote> newData = await getData(searchText);
+                          setState(() {
+                            fetchedData = newData;
+                          });
+                        }
                       },
                       decoration: InputDecoration(
                         hintText: 'Search (AAPL, GOOG) etc.',
@@ -237,75 +275,44 @@ class _QuotePageState extends State<QuotePage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Filtered Data:',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     SizedBox(height: 10),
                     Expanded(
-                      child: FutureBuilder<List<Quote>>(
-                        future: getData(searchText),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child: Text('Error fetching data.'),
-                            );
-                          } else {
-                            List<Quote> fetchedData = snapshot.data ?? [];
-                            if (fetchedData.isEmpty) {
-                              return Center(
-                                child: Text('No data found.'),
-                              );
-                            } else {
-                              return ListView.builder(
-                                itemCount: fetchedData.length,
-                                itemBuilder: (context, index) {
-                                  final quote = fetchedData[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _selectedOption = quote.symbol;
-                                      });
-                                      // Use addPostFrameCallback to dismiss the AlertDialog after the current frame is drawn
-                                      WidgetsBinding.instance!
-                                          .addPostFrameCallback((_) {
-                                        Navigator.of(context).pop();
-                                      });
-                                    },
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 16),
-                                      color: _selectedOption == quote.symbol
-                                          ? Colors.blue[100]
-                                          : Colors.transparent,
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          quote.name,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                _selectedOption == quote.symbol
-                                                    ? Colors.blue
-                                                    : Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                          }
+                      child: ListView.builder(
+                        itemCount: fetchedData.length,
+                        itemBuilder: (context, index) {
+                          final quote = fetchedData[index];
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context, quote);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: _selectedQuote == quote
+                                    ? Colors.blue[100]
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: Colors.grey[400]!,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  quote.name,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: _selectedQuote == quote
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -317,6 +324,13 @@ class _QuotePageState extends State<QuotePage> {
         );
       },
     );
+
+    if (selectedOption != null) {
+      setState(() {
+        _selectedQuote = selectedOption;
+        _selectedOptionName = _selectedQuote?.name;
+      });
+    }
   }
 
   Future<List<Quote>> getData(String filter) async {
@@ -326,7 +340,8 @@ class _QuotePageState extends State<QuotePage> {
           "https://liqueous.logixsy.com/api/quote/tickers?search=$filter",
         ),
       );
-
+      // Print the JSON data before decoding
+      print('JSON Data: ${response.body}');
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['data'] != null) {
@@ -339,6 +354,7 @@ class _QuotePageState extends State<QuotePage> {
               exchangeName: quote['exchange_name'],
             ));
           }
+          print(detailsList);
           return detailsList;
         }
       }
@@ -355,12 +371,31 @@ class Quote {
   final String symbol;
   final String name;
   final String exchangeName;
-  bool isSelected; // Add the isSelected property to track selection
 
   Quote({
     required this.symbol,
     required this.name,
     required this.exchangeName,
-    this.isSelected = false, // Default to unselected
   });
+}
+
+class GetQuotePage extends StatelessWidget {
+  final Quote? selectedQuote;
+
+  GetQuotePage({this.selectedQuote});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('Get a Quote'),
+      // ),
+      body: Center(
+        child: Text(
+          selectedQuote?.name ?? 'No quote selected',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
 }
