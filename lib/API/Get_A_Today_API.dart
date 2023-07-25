@@ -137,7 +137,6 @@ class _QuotePageState extends State<QuotePage> {
                   child: Material(
                     color: Colors.transparent,
                     child: Container(
-                      width: 400,
                       height: 60,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -202,18 +201,13 @@ class _QuotePageState extends State<QuotePage> {
                       ),
                       padding: EdgeInsets.symmetric(vertical: 15),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'GET A QUOTE TODAY',
-                          style: TextStyle(
-                            fontFamily: 'Roboto-Bold',
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      'GET A QUOTE TODAY',
+                      style: TextStyle(
+                        fontFamily: 'Roboto-Bold',
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -236,7 +230,7 @@ class _QuotePageState extends State<QuotePage> {
           builder: (context, setState) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(15.0),
               ),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -266,11 +260,11 @@ class _QuotePageState extends State<QuotePage> {
                         hintText: 'Search (AAPL, GOOG) etc.',
                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]!),
+                          borderSide: BorderSide(color: Colors.blue[400]!),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey[400]!),
+                          borderSide: BorderSide(color: Colors.blue[400]!),
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
@@ -281,34 +275,87 @@ class _QuotePageState extends State<QuotePage> {
                         itemCount: fetchedData.length,
                         itemBuilder: (context, index) {
                           final quote = fetchedData[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context, quote);
+                          final matchingLetter = quote.symbol[0].toUpperCase();
+                          bool isHovered = false;
+
+                          return MouseRegion(
+                            onEnter: (_) {
+                              setState(() {
+                                isHovered = true;
+                              });
                             },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: _selectedQuote == quote
-                                    ? Colors.blue[100]
-                                    : Colors.transparent,
-                                border: Border.all(
-                                  color: Colors.grey[400]!,
-                                  width: 1.0,
+                            onExit: (_) {
+                              setState(() {
+                                isHovered = false;
+                              });
+                            },
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context, quote);
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: isHovered
+                                      ? Colors.blue[100]
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(18),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 4,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  quote.name,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: _selectedQuote == quote
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '${quote.symbol}',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                        SizedBox(width: 90),
+                                        Expanded(
+                                          child: Text(
+                                            quote.name,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.grey[700],
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          quote.exchangeName,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
