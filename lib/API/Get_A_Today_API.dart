@@ -27,6 +27,8 @@ class QuotePage extends StatefulWidget {
 class _QuotePageState extends State<QuotePage> {
   Quote? _selectedQuote;
   String? _selectedOptionName;
+  int hoveredIndex = -1;
+  Set<int> hoveredIndices = Set();
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +181,7 @@ class _QuotePageState extends State<QuotePage> {
                       Quote? selectedQuote = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GenerateSheetPage(),
+                          builder: (context) => GenerateSheetPage(selectedQuote:_selectedQuote),
                         ),
                       );
 
@@ -235,7 +237,7 @@ class _QuotePageState extends State<QuotePage> {
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               content: SizedBox(
-                height: 300,
+                height: 400,
                 width: double.maxFinite,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -258,105 +260,95 @@ class _QuotePageState extends State<QuotePage> {
                       },
                       decoration: InputDecoration(
                         hintText: 'Search (AAPL, GOOG) etc.',
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue[400]!),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.blue[400]!),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 4.0),
                     Expanded(
                       child: ListView.builder(
                         itemCount: fetchedData.length,
                         itemBuilder: (context, index) {
                           final quote = fetchedData[index];
                           final matchingLetter = quote.symbol[0].toUpperCase();
-                          bool isHovered = false;
+                          bool isHovered = hoveredIndices.contains(index);
 
-                          return MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                isHovered = true;
-                              });
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context, quote);
                             },
-                            onExit: (_) {
-                              setState(() {
-                                isHovered = false;
-                              });
-                            },
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context, quote);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.symmetric(vertical: 5),
-                                padding: EdgeInsets.symmetric(horizontal: 16),
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: isHovered
-                                      ? Colors.blue[100]
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(18),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '${quote.symbol}',
+                            child: Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              height: 56.7,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        '${quote.symbol}',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: isHovered
+                                              ? Colors.black
+                                              : Colors.grey[700],
+                                        ),
+                                      ),
+                                      SizedBox(width: 90),
+                                      Expanded(
+                                        child: Text(
+                                          quote.name,
                                           style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.grey[700],
+                                            fontSize: 16,
+                                            color: isHovered
+                                                ? Colors.black
+                                                : Colors.grey[700],
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        SizedBox(width: 90),
-                                        Expanded(
-                                          child: Text(
-                                            quote.name,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.grey[700],
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        quote.exchangeName,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                          fontStyle: FontStyle.italic,
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          quote.exchangeName,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey,
-                                            fontStyle: FontStyle.italic,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           );
