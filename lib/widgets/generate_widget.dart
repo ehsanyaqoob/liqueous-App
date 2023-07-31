@@ -38,6 +38,7 @@ class GenerateSheetPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Display the selected quote here
+            // on top of the generate term sheet page
             if (selectedQuote != null)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +49,7 @@ class GenerateSheetPage extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.fade,
                     ),
                   ),
                   Flexible(
@@ -57,11 +58,14 @@ class GenerateSheetPage extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                       maxLines: 1,
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.fade,
                     ),
                   ),
                 ],
               ),
+            SizedBox(
+              width: 16.0,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,15 +82,16 @@ class GenerateSheetPage extends StatelessWidget {
             ),
 
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  '_____________________________',
-                  style: TextStyle(color: Colors.grey[700]),
-                )
+                Text('_______________________________________________',
+                    style: TextStyle(
+                      fontFamily: 'Roboto-Bold.ttf',
+                      color: Colors.grey,
+                    ))
               ],
             ),
             Row(

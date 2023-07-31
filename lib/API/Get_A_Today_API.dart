@@ -181,7 +181,8 @@ class _QuotePageState extends State<QuotePage> {
                       Quote? selectedQuote = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => GenerateSheetPage(selectedQuote:_selectedQuote),
+                          builder: (context) =>
+                              GenerateSheetPage(selectedQuote: _selectedQuote),
                         ),
                       );
 
@@ -225,144 +226,168 @@ class _QuotePageState extends State<QuotePage> {
     String searchText = _selectedQuote?.symbol ?? '';
     List<Quote> fetchedData = [];
     Quote? selectedOption = await showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              content: SizedBox(
-                height: 400,
-                width: double.maxFinite,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      onChanged: (value) async {
-                        setState(() {
-                          searchText = value;
-                        });
-                        if (searchText.isEmpty) {
-                          setState(() {
-                            fetchedData = [];
-                          });
-                        } else {
-                          List<Quote> newData = await getData(searchText);
-                          setState(() {
-                            fetchedData = newData;
-                          });
-                        }
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Search (AAPL, GOOG) etc.',
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue[400]!),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue[400]!),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 4.0),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: fetchedData.length,
-                        itemBuilder: (context, index) {
-                          final quote = fetchedData[index];
-                          final matchingLetter = quote.symbol[0].toUpperCase();
-                          bool isHovered = hoveredIndices.contains(index);
-
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context, quote);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              height: 56.7,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 1,
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '${quote.symbol}',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: isHovered
-                                              ? Colors.black
-                                              : Colors.grey[700],
-                                        ),
-                                      ),
-                                      SizedBox(width: 90),
-                                      Expanded(
-                                        child: Text(
-                                          quote.name,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: isHovered
-                                                ? Colors.black
-                                                : Colors.grey[700],
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 0),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        quote.exchangeName,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-              ),
-            );
-          },
-        );
-      },
-    );
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                content: SizedBox(
+                  height: 400,
+                  width: 600,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        onChanged: (value) async {
+                          setState(() {
+                            searchText = value;
+                          });
+                          if (searchText.isEmpty) {
+                            setState(() {
+                              fetchedData = [];
+                            });
+                          } else {
+                            List<Quote> newData = await getData(searchText);
+                            setState(() {
+                              fetchedData = newData;
+                            });
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search (AAPL, GOOG) etc.',
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue[400]!),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue[400]!),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 4.0),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: fetchedData.length,
+                          itemBuilder: (context, index) {
+                            final quote = fetchedData[index];
+                            final matchingLetter =
+                                quote.symbol[0].toUpperCase();
+                            bool isHovered = hoveredIndices.contains(index);
+
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context, quote);
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  height: 84.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(50),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 4,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      SizedBox(
+                                        height: 6,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue[100],
+                                              shape: BoxShape.circle,
+                                            ),
+                                            height: 60,
+                                            width: 60,
+                                            child: Center(
+                                              child: Text(
+                                                quote.symbol.substring(0, 1),
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Text(
+                                            '${quote.symbol}',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: isHovered
+                                                  ? Colors.black
+                                                  : Colors.grey[700],
+                                            ),
+                                          ),
+                                          SizedBox(width: 20),
+                                          Expanded(
+                                            child: Text(
+                                              quote.name,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: isHovered
+                                                    ? Colors.black
+                                                    : Colors.grey[700],
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            quote.exchangeName,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey,
+                                              fontStyle: FontStyle.italic,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        });
 
     if (selectedOption != null) {
       setState(() {

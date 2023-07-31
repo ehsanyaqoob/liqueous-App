@@ -640,8 +640,9 @@ class UserHome extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('             ________________________________',
+                        Text('_______________________________________________',
                             style: TextStyle(
                               fontFamily: 'Roboto-Bold.ttf',
                               color: Colors.grey,
@@ -656,7 +657,7 @@ class UserHome extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Choudry',
+                          'Chaudhry',
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'Roboto-Bold.ttf',
@@ -698,8 +699,9 @@ class UserHome extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('           ________________________________',
+                        Text('_______________________________________________',
                             style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'Roboto-Bold.ttf',
@@ -714,7 +716,7 @@ class UserHome extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Choudry',
+                          'Chaudhry',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -756,8 +758,9 @@ class UserHome extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('           ________________________________',
+                        Text('_______________________________________________',
                             style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'Roboto-Bold.ttf',
