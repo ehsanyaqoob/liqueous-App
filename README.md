@@ -1,4 +1,4 @@
-
+this repo is just for fun and practice 
 # liqueous
 
 A new Flutter project.
